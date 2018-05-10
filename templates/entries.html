@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h3 style="margin: 30px">All Entries</h3>
+        <section>
+            <div class="container">
+                <div class="entry-list single">
+                    {% for entry in entries %}
+                        <h3><a href="{{ url_for('details', slug=entry.slug) }}">{{ entry.title }}</a></h3>
+                        <time datetime="{{ entry.timestamp.strftime('%Y-%m-%d') }}">{{ entry.timestamp.strftime('%Y-%m-%d') }}</time>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+{% endblock %}
