@@ -10,15 +10,11 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
         <link rel="stylesheet" href="/static/css/normalize.css">
         <link rel="stylesheet" href="/static/css/site.css">
-        <!--
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
-        -->
+
     </head>
     <body>
         <header>
             <div class="container">
-
                 <div class="site-header">
                     <div class="login-out" style="margin-bottom: 20px;">
 
@@ -31,7 +27,7 @@
                         {% endif %}
                     </div>
                         <a class="logo" href="{{ url_for('entries') }}"><i class="material-icons">library_books</i></a>
-                        <a href="{{ url_for('entry') }}" class="button icon-right" ><span>New Entry</span><i class="material-icons">add</i></a>
+                        <a class="button icon-right" href="{{ url_for('entry') }}"><span>New Entry</span><i class="material-icons">add</i></a>
                 </div>
                     <div style="margin-top: 30px;">
                         <h2>Hello{% if current_user.is_authenticated %} {{ current_user.username }}{% endif %}</h2>
@@ -39,7 +35,6 @@
 
             </div>
         </header>
-        <section>
             <div class="message" style="margin: 25px;">
                 <!--flash messages -->
                 {% with messages = get_flashed_messages(with_categories=True) %}
@@ -52,8 +47,7 @@
             </div>
 
             {% block content %}{% endblock %}
-
-        </section>
+            
         <footer>
             <div>
                 &copy; MyJournal
