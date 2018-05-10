@@ -104,20 +104,24 @@ def entry():
 @login_required
 def edit(slug):
     """Edit an entry."""
-    entry = models.Entry.get(models.Entry.slug == slug)
-    form = forms.EditEntryForm(obj=entry)
-    if form.validate_on_submit():
-        models.Entry.update(
-            title = form.title.data,
-            slug = slugify(form.title.data),
-            timestamp = form.timestamp.data,
-            time_spent = form.time_spent.data,
-            content = form.content.data.strip(),
-            resources = form.resources.data.strip()
-        ).where(models.Entry.slug == entry.slug).execute()
-        flash("Entry updated!", "success")
-        return redirect(url_for('index'))
-    return render_template('edit.html', form=form)
+    try:
+        entry = models.Entry.get(models.Entry.slug == slug)
+    except models.DoesNotExist:
+        abort(404)
+    else:
+        form = forms.EditEntryForm(obj=entry)
+        if form.validate_on_submit():
+            models.Entry.update(
+                title = form.title.data,
+                slug = slugify(form.title.data),
+                timestamp = form.timestamp.data,
+                time_spent = form.time_spent.data,
+                content = form.content.data.strip(),
+                resources = form.resources.data.strip()
+            ).where(models.Entry.slug == entry.slug).execute()
+            flash("Entry updated!", "success")
+            return redirect(url_for('index'))
+        return render_template('edit.html', form=form)
 
 
 @app.route('/entries')
